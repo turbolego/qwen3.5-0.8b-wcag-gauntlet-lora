@@ -1,1 +1,1 @@
-# qwen3.5-0.8b-wcag-gauntlet-lora
+# --- Model Card Metadata ---\n# Developed by: Turbolego (with contributions from hummern and kveita)\n# Related projects: https://github.com/turbolego/AI-WCAG-Gauntlet (benchmark harness), https://github.com/turbolego/wcag-skill (skill definition), https://github.com/turbolego/vegaml-wcag (training data/results)\n# Qwen3.5-0.8B WCAG Gauntlet Tool-Use LoRA
