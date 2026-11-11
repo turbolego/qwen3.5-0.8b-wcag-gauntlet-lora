@@ -1,11 +1,44 @@
-# Qwen3.5-0.8B WCAG Gauntlet Tool-Use LoRA
+# Qwen3.5-0.8B WCAG Gauntlet Tool-Use LoRA (+ Q4_K_M GGUF)
 
 LoRA adapter that teaches **Qwen3.5-0.8B** the agentic tool-routing skill from [wcag-skill](https://github.com/turbolego/wcag-skill):
 while running the [AI-WCAG-Gauntlet](https://github.com/turbolego/AI-WCAG-Gauntlet) benchmark
 loop, pick the right validator (`w3c` / `axe` / `pa11y` / `qualweb` / `fix` / `check`) and run
 a self-check on your own code **before** the benchmark's official iteration check.
 
-Published model: https://huggingface.co/Turbolego/qwen3.5-0.8b-wcag-gauntlet-lora
+Published model (LoRA adapter + merged **Q4_K_M GGUF**): https://huggingface.co/Turbolego/qwen3.5-0.8b-wcag-gauntlet-lora
+
+---
+
+## Download the GGUF (Ollama / llama.cpp ready)
+
+| Source | File | Size |
+|---|---|---|
+| **Hugging Face** (direct, LFS) | [`qwen3.5-0.8b-wcag-gauntlet-lora-q4_k_m.gguf`](https://huggingface.co/Turbolego/qwen3.5-0.8b-wcag-gauntlet-lora/resolve/main/qwen3.5-0.8b-wcag-gauntlet-lora-q4_k_m.gguf) | 505 MB |
+| **GitHub release asset** | [v1.0-q4k-m-gguf](https://github.com/turbolego/qwen3.5-0.8b-wcag-gauntlet-lora/releases/download/v1.0-q4k-m-gguf/qwen3.5-0.8b-wcag-gauntlet-lora-q4_k_m.gguf) | 505 MB |
+
+```bash
+# Hugging Face
+hf download Turbolego/qwen3.5-0.8b-wcag-gauntlet-lora \
+  qwen3.5-0.8b-wcag-gauntlet-lora-q4_k_m.gguf --local-dir ./
+
+# or GitHub release
+curl -L -o qwen3.5-0.8b-wcag-gauntlet-lora-q4_k_m.gguf \
+  https://github.com/turbolego/qwen3.5-0.8b-wcag-gauntlet-lora/releases/download/v1.0-q4k-m-gguf/qwen3.5-0.8b-wcag-gauntlet-lora-q4_k_m.gguf
+
+# Ollama
+cat > Modelfile <<'EOF'
+FROM ./qwen3.5-0.8b-wcag-gauntlet-lora-q4_k_m.gguf
+TEMPLATE """{{- if .System }}{{ .System }}{{ end }}
+{{- range .Messages }}{{ .Role }}: {{ .Content }}
+{{- end }}
+assistant: """
+PARAMETER stop "user:"
+PARAMETER stop "assistant:"
+EOF
+ollama create qwen-gauntlet -f Modelfile
+ollama run qwen-gauntlet "State: w3c_errors=2, axe_violations=5. Which validator next? Format: <word>\\n<yes|no>"
+# expected: w3c \n yes
+```
 
 ---
 
@@ -54,6 +87,10 @@ On plain WCAG question-answering (not this task), base Qwen3.5-0.8B is already a
 | `tooluse_test.jsonl` | Held-out test data — 155 rows |
 | `tooluse_questions.json` | Vegaml question definitions used in training |
 | `LICENSE` | Apache 2.0 |
+
+> The merged **Q4_K_M GGUF** (505 MB) is too large for git push — download it from
+> [Hugging Face](https://huggingface.co/Turbolego/qwen3.5-0.8b-wcag-gauntlet-lora/resolve/main/qwen3.5-0.8b-wcag-gauntlet-lora-q4_k_m.gguf)
+> or the [GitHub release `v1.0-q4k-m-gguf`](https://github.com/turbolego/qwen3.5-0.8b-wcag-gauntlet-lora/releases/tag/v1.0-q4k-m-gguf).
 
 ---
 
