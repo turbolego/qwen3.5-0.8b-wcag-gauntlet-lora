@@ -1,8 +1,28 @@
 # --- Model Card Metadata ---
 # Developed by: Turbolego (with contributions from hummern and kveita)
 # Related projects: https://github.com/turbolego/AI-WCAG-Gauntlet (benchmark harness), https://github.com/turbolego/wcag-skill (skill definition), https://github.com/turbolego/vegaml-wcag (training data/results)
+# Published model: https://huggingface.co/Turbolego/qwen3.5-0.8b-wcag-gauntlet-lora
+# License: Apache-2.0 (same as the Hugging Face model card)
 
-# WCAG Tool-Use Skill: LoRA vs Closed-Form Embedding (AI-WCAG-Gauntlet)
+# Qwen3.5-0.8B WCAG Gauntlet Tool-Use LoRA
+
+LoRA adapter that teaches **Qwen3.5-0.8B** the agentic tool-routing skill from the wcag-skill:
+while running the AI-WCAG-Gauntlet benchmark loop, pick the right validator
+(`w3c` / `axe` / `pa11y` / `qualweb` / `fix` / `check`) and run a self-check on your own code
+**before** the benchmark's official iteration check.
+
+## Files in this repo
+
+| File | Purpose |
+|---|---|
+| `lora_tooluse_skill.py` | Training script (LoRA fine-tune on Qwen3.5-0.8B, T4-ready) |
+| `tooluse_fit.jsonl` | Fit data (300 rows) |
+| `tooluse_val.jsonl` | Validation data (40 rows) |
+| `tooluse_test.jsonl` | Held-out test data (155 rows) |
+| `tooluse_questions.json` | Vegaml question definitions used in training |
+| `LICENSE` | Apache 2.0 |
+
+## Performance (155 held-out test rows)
 
 **Date:** 2026-11-10
 **Goal:** teach Qwen3.5-0.8B the *agentic tool-use* part of the wcag-skill
