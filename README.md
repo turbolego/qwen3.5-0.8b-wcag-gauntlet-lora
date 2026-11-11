@@ -1,6 +1,7 @@
 # --- Model Card Metadata ---
 # Developed by: Turbolego (with contributions from hummern and kveita)
 # Related projects: https://github.com/turbolego/AI-WCAG-Gauntlet (benchmark harness), https://github.com/turbolego/wcag-skill (skill definition), https://github.com/turbolego/vegaml-wcag (training data/results)
+
 # WCAG Tool-Use Skill: LoRA vs Closed-Form Embedding (AI-WCAG-Gauntlet)
 
 **Date:** 2026-11-10
